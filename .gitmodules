@@ -1,0 +1,4 @@
+[submodule "Scripts/AFUtils"]
+	path = Scripts/AFUtils
+	url = https://github.com/igromanru/AFUtils-UE4SS.git
+	branch = master
