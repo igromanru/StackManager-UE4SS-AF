@@ -1,6 +1,6 @@
 
 ---@class DataHolder
-local DataHolder = {
+local Cache = {
     StackToTake = 1
 }
 
@@ -8,7 +8,7 @@ local LastEnteredItemSlot = nil ---@type UW_InventoryItemSlot_C?
 local LastPickUpItemSlot = nil ---@type UW_InventoryItemSlot_C?
 
 ---@return UW_InventoryItemSlot_C?
-function DataHolder:GetLastEnteredItemSlot()
+function Cache:GetLastEnteredItemSlot()
     if LastEnteredItemSlot and LastEnteredItemSlot:IsValid() then
         return LastEnteredItemSlot
     end
@@ -17,7 +17,7 @@ function DataHolder:GetLastEnteredItemSlot()
 end
 
 ---@param ItemSlot UW_InventoryItemSlot_C|nil
-function DataHolder:SetLastEnteredItemSlot(ItemSlot)
+function Cache:SetLastEnteredItemSlot(ItemSlot)
     if ItemSlot and ItemSlot:IsValid() and ItemSlot.ItemInSlot.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.RowName ~= NAME_None then
         LastEnteredItemSlot = ItemSlot
     else
@@ -26,7 +26,7 @@ function DataHolder:SetLastEnteredItemSlot(ItemSlot)
 end
 
 ---@param ItemSlot UW_InventoryItemSlot_C|nil
-function DataHolder:SetLastPickUpItemSlot(ItemSlot)
+function Cache:SetLastPickUpItemSlot(ItemSlot)
     if ItemSlot and ItemSlot:IsValid() and ItemSlot.ItemInSlot.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.RowName ~= NAME_None then
         LastPickUpItemSlot = ItemSlot
     else
@@ -35,7 +35,7 @@ function DataHolder:SetLastPickUpItemSlot(ItemSlot)
 end
 
 ---@return UW_InventoryItemSlot_C?
-function DataHolder:GetLastPickUpItemSlot()
+function Cache:GetLastPickUpItemSlot()
     if LastPickUpItemSlot and LastPickUpItemSlot:IsValid() then
         return LastPickUpItemSlot
     end
@@ -44,21 +44,21 @@ function DataHolder:GetLastPickUpItemSlot()
 end
 
 ---@return boolean
-function DataHolder:IsSameSlot()
+function Cache:IsSameSlot()
     local lastEnteredItemSlot = self:GetLastEnteredItemSlot()
     local lastPickUpItemSlot = self:GetLastPickUpItemSlot()
     return lastEnteredItemSlot ~= nil and lastPickUpItemSlot ~= nil and lastEnteredItemSlot:GetAddress() == lastPickUpItemSlot:GetAddress()
 end
 
-function DataHolder:Reset()
+function Cache:Reset()
     LastEnteredItemSlot = nil
     LastPickUpItemSlot = nil
     self.StackToTake = 0
 end
 
 ---@return boolean
-function DataHolder:IsValid()
+function Cache:IsValid()
     return LastEnteredItemSlot ~= nil and LastPickUpItemSlot ~= nil
 end
 
-return DataHolder
+return Cache
