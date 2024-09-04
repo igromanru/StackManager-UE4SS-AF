@@ -66,11 +66,25 @@ local function TakeHalf()
         if not lastEnteredItemSlot then return end
 
         local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
+        
         LogDebug("TakeHalf: CurrentStack: ", currentStack)
-        if currentStack > 1 then
+        if currentStack > 1 and Cache.StackToTake then
             local half = math.floor(currentStack / 2)
             LogDebug("TakeHalf: Value: ", half)
-            lastEnteredItemSlot:PickUpThisItemToCursor(true, half)
+            LogDebug("TakeHalf: StackToTake: ", Cache.StackToTake)
+            if Cache.StackToTake < half then
+                Cache.StackToTake = half
+            else
+                local halfOfTheRest = (currentStack - Cache.StackToTake) / 2
+                LogDebug("TakeHalf: halfOfTheRest: ", halfOfTheRest)
+                Cache.StackToTake = math.floor(Cache.StackToTake + halfOfTheRest)
+            end
+            LogDebug("TakeHalf: New StackToTake: ", Cache.StackToTake)
+            if Cache.StackToTake >= currentStack then
+                Cache.StackToTake = currentStack - 1
+                LogDebug("TakeHalf: Clamp StackToTake: ", Cache.StackToTake)
+            end
+            lastEnteredItemSlot:PickUpThisItemToCursor(true, Cache.StackToTake)
         end
     end)
 end
