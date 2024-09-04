@@ -23,7 +23,7 @@ local Cache = require("Cache")
 
 ModName = "StackManager"
 ModVersion = "1.0.0"
-DebugMode = true
+DebugMode = false
 IsModEnabled = true
 
 LogInfo("Starting mod initialization")

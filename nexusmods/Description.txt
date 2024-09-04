@@ -1,0 +1,72 @@
+[font=Verdana][size=4][b]Description[/b][/size][/font]
+Current version of the mod uses a main key and modifiers key around it to trigger different functionalities.
+The default main Hotkey is [b]Q[/b], move the mouse cursor on an item in the inventory then press Q to pick up exactly 1 item from the stack.
+Modifier key to pick up half of the stack is [b]Shift[/b]. Press [b]Shift + Q[/b] to pick up half of items stack. 
+Both keys can be used multiple times to increase the amount of items you're about to take from the stack.
+Additionally there are two modifiers to increase or decrease the stack:
+[b]Ctrl + Q[/b] will increase the stack of highlighted item, [b]Alt + Q[/b] will decrease it. (cheat option)
+[b]Cheat Mode:[/b] There is a cheat mode that is active by default. It causes Q (take 1 item) to increase the stack of the highlighted item if there are not enough items in the stack to be taken.
+The main key, modifiers and the cheat mode can be changed in the file [i]main.lua[/i] . (see Configuration section below)
+[size=3]All cheat options work only as host![/size]
+
+[font=Verdana][size=4][b]Requirements[/b][/size][/font]
+[size=3]Unreal Engine Scripting System aka. [url=https://github.com/UE4SS-RE/RE-UE4SS]RE-UE4SS[/url][/size]
+
+[font=Verdana][size=4][b]Manual Installation[/b][/size][/font]
+[size=2]As for now Vortex doesn't support the game, so you have to install the mod manually.[/size]
+1. Download the latest version of RE-UE4SS from it's [url=https://github.com/UE4SS-RE/RE-UE4SS/releases]Release[/url] section. You need the [b]UE4SS_v{version number}.zip [/b] (e.g.  UE4SS_v3.0.1.zip)
+2. Unzip the content of the zip archive into the following location: [i](game root directory)\AbioticFactor\Binaries\Win64\[/i]
+[size=2]It should be at the location of the [b]AbioticFactor-Win64-Shipping.exe[/b] !
+For Steam users it might be something like this: [i]C:\Program Files (x86)\Steam\steamapps\common\AbioticFactor\Binaries\Win64\[/i][/size]
+3. Now use the [b]Manual Download[/b] button in [i]Files[/i] tab to download the mod as a zip file as well.
+4. Unzip/extract the content of mod's zip ([b]StackManager[/b] folder) into the directory: [i](game root directory)\AbioticFactor\Binaries\Win64\Mods\[/i]
+[size=2]Whole mod path should be like this: [i](game root directory)\AbioticFactor\Binaries\Win64\Mods\StackManager\[/i]
+Steam example: [i]C:\Program Files (x86)\Steam\steamapps\common\AbioticFactor\Binaries\Win64\Mods\StackManager\
+[/i][/size]5. Done
+
+[font=Verdana][size=4][b]Mod Configuration[/b][/size][/font]
+1. Navigate into mod's directory to find the [b]main.lua[/b] file.
+[size=2]It should be in: (game root directory)\AbioticFactor\Binaries\Win64\Mods\StackManager\Scripts\[/size]
+2. Open the [b]main.lua[/b] with Notepad or any other text editor.
+3. Here you can change following variables:
+[b]PickUpKey[/b] - [size=2]Main key (see Description above)[/size]
+[b]TakeHalfModifiers[/b] - [size=2]Modifier to the "PickUpKey", (PickUpKey + TakeHalfModifiers) [/size]
+[b]IncreaseStackModifiers[/b]- [size=2]Modifier to the "PickUpKey", (PickUpKey + IncreaseStackModifiers) [/size]
+[b]DecreaseStackModifiers[/b]- [size=2]Modifier to the "PickUpKey", (PickUpKey + DecreaseStackModifiers) [/size]
+[b]CheatMode[/b] - [size=2]Set to [b]false[/b] to disable the cheat feature while picking up single items from the stack[/size]
+The [i]main.lua[/i] contains links to UE4SS documentation with possible key and modifier values.
+4. Don't forget to save your changes.
+
+[font=Verdana][size=4][b]Recommended UE4SS settings for better performance[/b][/size][/font]
+[size=2]If you experience lag spikes, I highly recommend to change this settings.[/size]
+1. Navigate to the game directory where you've installed the UE4SS: [i](game root directory)\AbioticFactor\Binaries\Win64\[/i]
+[size=2]e.g. [i]C:\Program Files (x86)\Steam\steamapps\common\AbioticFactor\Binaries\Win64\[/i][/size]
+2. Open [b]UE4SS-settings.ini[/b] with any text editor.
+3. Find following entries and change them as following:
+[code]bUseUObjectArrayCache = false
+GuiConsoleEnabled = 0
+EnableDumping = 0[/code]
+4. Save the file.
+[size=2]If you still experience performance issues, write a detailed comment what happens, your PC specs and which mods you use.[/size]
+
+[font=Verdana][size=4][b]Feedback[/b][/size][/font]
+I've released the mod as soon I was done testing all the features. It might require longer period of playing to find any bugs and things that can be done better.
+Please report any issues and ideas.
+Also If you really need each feature of the mod as a different keys, please let me know.
+
+[font=Verdana][size=4][b]Known Issues[/b][/size][/font]
+Current UE4SS version works with the game, but it has of a problem that causes the game to crash when you exit it.
+It has nothing to do with the mod and it has no negative impact on the game or your save file, it's just a bit annoying.
+Please report any crashes that happens during the game.
+
+[font=Verdana][size=4][b]My AF Mods[/b][/size][/font]
+Check out my other Abiotic Factor mods.
+[list]
+[*][url=https://www.nexusmods.com/abioticfactor/mods/20]Duplicate Items[/url]
+[*][url=https://www.nexusmods.com/abioticfactor/mods/23]Instant Fishing[/url]
+[*][url=https://www.nexusmods.com/abioticfactor/mods/28]Cheat Console Commands[/url]
+[*][url=https://www.nexusmods.com/abioticfactor/mods/22]Unlimited Power (Gear - Held Item - Batteries)[/url]
+[*][url=https://www.nexusmods.com/abioticfactor/mods/31]Jager Corpse Remover[/url]
+[/list]
+
+[b][url=https://github.com/igromanru/StackManager-UE4SS-AF]GitHub Page[/url][/b]
