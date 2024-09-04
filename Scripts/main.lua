@@ -12,7 +12,7 @@ local PickUpKey = Key.Q
 local TakeHalfModifiers = { ModifierKey.SHIFT }
 local IncreaseStackModifiers = { ModifierKey.CONTROL }
 local DecreaseStackModifiers = { ModifierKey.ALT }
-local CheatMode = true
+local CheatMode = false
 -------------------------------------
 
 ------------------------------
