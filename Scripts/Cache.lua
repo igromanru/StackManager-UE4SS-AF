@@ -18,7 +18,7 @@ end
 
 ---@param ItemSlot UW_InventoryItemSlot_C|nil
 function Cache:SetLastEnteredItemSlot(ItemSlot)
-    if ItemSlot and ItemSlot:IsValid() and ItemSlot.ItemInSlot.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.RowName ~= NAME_None then
+    if ItemSlot and ItemSlot:IsValid() and not ItemSlot.Empty then
         LastEnteredItemSlot = ItemSlot
     else
         LastEnteredItemSlot = nil
@@ -27,7 +27,7 @@ end
 
 ---@param ItemSlot UW_InventoryItemSlot_C|nil
 function Cache:SetLastPickUpItemSlot(ItemSlot)
-    if ItemSlot and ItemSlot:IsValid() and ItemSlot.ItemInSlot.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.RowName ~= NAME_None then
+    if ItemSlot and ItemSlot:IsValid() and not ItemSlot.Empty then
         LastPickUpItemSlot = ItemSlot
     else
         LastPickUpItemSlot = nil

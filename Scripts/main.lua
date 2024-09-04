@@ -22,8 +22,8 @@ local AFUtils = require("AFUtils.AFUtils")
 local Cache = require("Cache")
 
 ModName = "StackManager"
-ModVersion = "1.0.0"
-DebugMode = false
+ModVersion = "1.0.1"
+DebugMode = true
 IsModEnabled = true
 
 LogInfo("Starting mod initialization")
@@ -48,7 +48,10 @@ local function TakeOne()
                 if stackToAdd > 0 then
                     local inventory, slotIndex = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
                     if inventory then
-                        AFUtils.AddToItemStack(inventory, slotIndex, stackToAdd)
+                        LogDebug("TakeOne: AddToItemStack: slotIndex: " .. slotIndex .. " stackToAdd: " .. stackToAdd)
+                        if AFUtils.AddToItemStack(inventory, slotIndex, stackToAdd) then
+                            LogDebug("TakeOne: AddToItemStack: Success")
+                        end
                     end
                 end
             else
@@ -119,9 +122,9 @@ end
 local function OnMouseEnter(Context)
     local inventoryItemSlot = Context:get() ---@type UW_InventoryItemSlot_C
 
-    LogDebug("[OnMouseEnter] called:")
+    -- LogDebug("[OnMouseEnter] called:")
     Cache:SetLastEnteredItemSlot(inventoryItemSlot)
-    LogDebug("------------------------------")
+    -- LogDebug("------------------------------")
 end
 
 local function PickUpThisItemToCursor(Context, DraggedBySplitStack, SplitStackSize)
@@ -129,11 +132,11 @@ local function PickUpThisItemToCursor(Context, DraggedBySplitStack, SplitStackSi
     local draggedBySplitStack = DraggedBySplitStack:get()
     local splitStackSize = SplitStackSize:get()
 
-    LogDebug("[PickUpThisItemToCursor] called:")
-    LogDebug("DraggedBySplitStack:  ", draggedBySplitStack)
-    LogDebug("SplitStackSize:  ", splitStackSize)
+    -- LogDebug("[PickUpThisItemToCursor] called:")
+    -- LogDebug("DraggedBySplitStack:  ", draggedBySplitStack)
+    -- LogDebug("SplitStackSize:  ", splitStackSize)
     Cache:SetLastPickUpItemSlot(inventoryItemSlot)
-    LogDebug("------------------------------")
+    -- LogDebug("------------------------------")
 end
 
 local function DropItemFromCursor(Context, DragDropOperation, Leftovers)
@@ -141,13 +144,13 @@ local function DropItemFromCursor(Context, DragDropOperation, Leftovers)
     -- local dragDropOperation = DragDropOperation:get()
     local leftovers = Leftovers:get()
 
-    LogDebug("[DropItemFromCursor] called:")
-    LogDebug("Leftovers:  ", leftovers)
+    -- LogDebug("[DropItemFromCursor] called:")
+    -- LogDebug("Leftovers:  ", leftovers)
     if leftovers <= 0 then
-        LogDebug("Reset Cache")
+        -- LogDebug("Reset Cache")
         Cache:Reset()
     end
-    LogDebug("------------------------------")
+    -- LogDebug("------------------------------")
 end
 
 local ClientRestart = "/Script/Engine.PlayerController:ClientRestart"
@@ -163,11 +166,9 @@ local function HookOnce()
     end
     if ClientRestartPreId and ClientRestartPostId then
         UnregisterHook(ClientRestart, ClientRestartPreId, ClientRestartPostId)
+        ClientRestartPreId = nil
+        ClientRestartPostId = nil
     end
-end
-
-if DebugMode then
-    HookOnce()
 end
 
 -- Hooks --
@@ -176,6 +177,10 @@ ClientRestartPreId, ClientRestartPostId = RegisterHook(ClientRestart, function(C
     HookOnce()
     LogDebug("------------------------------")
 end)
+
+if DebugMode then
+    HookOnce()
+end
 
 -- Key Binds --
 RegisterKeyBind(PickUpKey, TakeOne)
