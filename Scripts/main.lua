@@ -29,19 +29,6 @@ IsModEnabled = true
 
 LogInfo("Starting mod initialization")
 
--- ---@param InventoryItemSlot UW_InventoryItemSlot_C
--- ---@param Leave boolean?
--- local function SetLastInventoryItemSlot(InventoryItemSlot, Leave)
---     if not InventoryItemSlot then return end
---     Leave = Leave == true
-
---     if InventoryItemSlot.Empty or Leave then
---         LastEnteredItemSlot = nil
---     else
---         LastEnteredItemSlot = InventoryItemSlot
---     end
--- end
-
 local function TakeOne()
     ExecuteInGameThread(function()
         local lastEnteredItemSlot = DataHolder:GetLastEnteredItemSlot()
@@ -80,9 +67,9 @@ local function TakeHalf()
         if not lastEnteredItemSlot then return end
 
         local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
-        if currentStack > 2 then
-            local half = currentStack / 2
-            LogDebug("TakeHalf: CurrentStack: ", currentStack)
+        LogDebug("TakeHalf: CurrentStack: ", currentStack)
+        if currentStack > 1 then
+            local half = math.floor(currentStack / 2)
             LogDebug("TakeHalf: Value: ", half)
             lastEnteredItemSlot:PickUpThisItemToCursor(true, half)
         end
@@ -94,7 +81,7 @@ local function IncreaseStack()
         local lastEnteredItemSlot = DataHolder:GetLastEnteredItemSlot()
         if not lastEnteredItemSlot then return end
 
-        
+
     end)
 end
 
