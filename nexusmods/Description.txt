@@ -9,6 +9,10 @@ Additionally there are two modifiers to increase or decrease the stack:
 The main key, modifiers and the cheat mode can be changed in the file [i]main.lua[/i] . (see Configuration section below)
 [size=3]All cheat options work only as host![/size]
 
+[color=#f1c232][font=Verdana][size=4][b]Attention[/b][/size][/font][/color]
+[size=3]The key [b]Q[/b] is bound to "Store all of type" in game own settings per default![/size]
+I recommend to change it in game Settings->Controls to something else, [b]R[/b] might be a good option, since you don't reload while in inventory anyway.
+
 [font=Verdana][size=4][b]Requirements[/b][/size][/font]
 [size=3]Unreal Engine Scripting System aka. [url=https://github.com/UE4SS-RE/RE-UE4SS]RE-UE4SS[/url][/size]
 
@@ -63,12 +67,10 @@ It has nothing to do with the mod and it has no negative impact on the game or y
 
 [font=Verdana][size=4][b]My AF Mods[/b][/size][/font]
 Check out my other Abiotic Factor mods.
-[list]
-[*][url=https://www.nexusmods.com/abioticfactor/mods/20]Duplicate Items[/url]
+[list][*][url=https://www.nexusmods.com/abioticfactor/mods/28]Cheat Console Commands[/url]
 [*][url=https://www.nexusmods.com/abioticfactor/mods/23]Instant Fishing[/url]
-[*][url=https://www.nexusmods.com/abioticfactor/mods/28]Cheat Console Commands[/url]
 [*][url=https://www.nexusmods.com/abioticfactor/mods/22]Unlimited Power (Gear - Held Item - Batteries)[/url]
 [*][url=https://www.nexusmods.com/abioticfactor/mods/31]Jager Corpse Remover[/url]
+[*][url=https://www.nexusmods.com/abioticfactor/mods/20]Duplicate Items[/url]
 [/list]
-
 [b][url=https://github.com/igromanru/StackManager-UE4SS-AF]GitHub Page[/url][/b]
