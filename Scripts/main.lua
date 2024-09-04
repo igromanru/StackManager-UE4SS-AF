@@ -68,7 +68,7 @@ local function TakeHalf()
         local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
         
         LogDebug("TakeHalf: CurrentStack: ", currentStack)
-        if currentStack > 1 and Cache.StackToTake then
+        if currentStack > 1 then
             local half = math.floor(currentStack / 2)
             LogDebug("TakeHalf: Value: ", half)
             LogDebug("TakeHalf: StackToTake: ", Cache.StackToTake)
@@ -144,6 +144,7 @@ local function DropItemFromCursor(Context, DragDropOperation, Leftovers)
     LogDebug("[DropItemFromCursor] called:")
     LogDebug("Leftovers:  ", leftovers)
     if leftovers <= 0 then
+        LogDebug("Reset Cache")
         Cache:Reset()
     end
     LogDebug("------------------------------")
