@@ -22,7 +22,7 @@ local AFUtils = require("AFUtils.AFUtils")
 local Cache = require("Cache")
 
 ModName = "StackManager"
-ModVersion = "1.0.1"
+ModVersion = "1.0.2"
 DebugMode = true
 IsModEnabled = true
 
@@ -97,8 +97,10 @@ local function IncreaseStack()
         local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
         if not lastEnteredItemSlot then return end
 
+        LogDebug("IncreaseStack: triggered")
         local inventory, slotIndex = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
         if inventory then
+            LogDebug("IncreaseStack: Call AddToItemStack")
             AFUtils.AddToItemStack(inventory, slotIndex, 1)
         end
     end)
@@ -110,9 +112,11 @@ local function DecreaseStack()
         if not lastEnteredItemSlot then return end
 
         local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
+        LogDebug("DecreaseStack: currentStack: ", currentStack)
         if currentStack > 1 then
             local inventory, slotIndex = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
             if inventory then
+                LogDebug("DecreaseStack: Call AddToItemStack")
                 AFUtils.AddToItemStack(inventory, slotIndex, -1)
             end
         end
@@ -124,6 +128,14 @@ local function OnMouseEnter(Context)
 
     -- LogDebug("[OnMouseEnter] called:")
     Cache:SetLastEnteredItemSlot(inventoryItemSlot)
+    -- LogDebug("------------------------------")
+end
+
+local function OnMouseLeave(Context)
+    local inventoryItemSlot = Context:get() ---@type UW_InventoryItemSlot_C
+
+    -- LogDebug("[OnMouseEnter] called:")
+    Cache:SetLastEnteredItemSlot(nil)
     -- LogDebug("------------------------------")
 end
 
@@ -160,6 +172,7 @@ local WasHooked = false
 local function HookOnce()
     if not WasHooked then
         RegisterHook("/Game/Blueprints/Widgets/Inventory/W_InventoryItemSlot.W_InventoryItemSlot_C:OnMouseEnter", OnMouseEnter)
+        RegisterHook("/Game/Blueprints/Widgets/Inventory/W_InventoryItemSlot.W_InventoryItemSlot_C:OnMouseLeave", OnMouseLeave)
         RegisterHook("/Game/Blueprints/Widgets/Inventory/W_InventoryItemSlot.W_InventoryItemSlot_C:PickUpThisItemToCursor", PickUpThisItemToCursor)
         RegisterHook("/Game/Blueprints/Widgets/Inventory/W_InventoryItemSlot.W_InventoryItemSlot_C:DropItemFromCursor", DropItemFromCursor)
         WasHooked = true
@@ -183,6 +196,10 @@ if DebugMode then
 end
 
 -- Key Binds --
+if IsKeyBindRegistered(PickUpKey) then
+    error("The PickUpKey key is already used for something else!")
+end
+
 RegisterKeyBind(PickUpKey, TakeOne)
 RegisterKeyBind(PickUpKey, TakeHalfModifiers, TakeHalf)
 RegisterKeyBind(PickUpKey, IncreaseStackModifiers, IncreaseStack)
