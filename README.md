@@ -1,3 +1,3 @@
-# Stack Splitter Mod for Abiotic Factor
+# Stack Manager Mod for Abiotic Factor
 
 [Official NexusMods page]()
