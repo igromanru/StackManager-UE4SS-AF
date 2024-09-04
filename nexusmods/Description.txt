@@ -49,15 +49,17 @@ EnableDumping = 0[/code]
 4. Save the file.
 [size=2]If you still experience performance issues, write a detailed comment what happens, your PC specs and which mods you use.[/size]
 
+[font=Verdana][size=4][b]Compatibility[/b][/size][/font]
+The mod is NOT compatible with the [url=https://www.nexusmods.com/abioticfactor/mods/6]Just Press Q[/url] mod!
+
 [font=Verdana][size=4][b]Feedback[/b][/size][/font]
-I've released the mod as soon I was done testing all the features. It might require longer period of playing to find any bugs and things that can be done better.
+I've released the mod as soon I was done testing all the features.
 Please report any issues and ideas.
-Also If you really need each feature of the mod as a different keys, please let me know.
+Also If you really need each feature of the mod as a different key or you don't like to have the cheat mode per default, please let me know.
 
 [font=Verdana][size=4][b]Known Issues[/b][/size][/font]
 Current UE4SS version works with the game, but it has of a problem that causes the game to crash when you exit it.
 It has nothing to do with the mod and it has no negative impact on the game or your save file, it's just a bit annoying.
-Please report any crashes that happens during the game.
 
 [font=Verdana][size=4][b]My AF Mods[/b][/size][/font]
 Check out my other Abiotic Factor mods.
