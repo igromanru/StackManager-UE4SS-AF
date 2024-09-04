@@ -5,7 +5,7 @@ Modifier key to pick up half of the stack is [b]Shift[/b]. Press [b]Shift + Q[/b
 Both keys can be used multiple times to increase the amount of items you're about to take from the stack.
 Additionally there are two modifiers to increase or decrease the stack:
 [b]Ctrl + Q[/b] will increase the stack of highlighted item, [b]Alt + Q[/b] will decrease it. (cheat option)
-[b]Cheat Mode:[/b] There is a cheat mode that is active by default. It causes Q (take 1 item) to increase the stack of the highlighted item if there are not enough items in the stack to be taken.
+[b]Cheat Mode:[/b] Setting that is default disabled. It causes Q (take 1 item) to increase the stack of the highlighted item if there are not enough items in the stack to be taken.
 The main key, modifiers and the cheat mode can be changed in the file [i]main.lua[/i] . (see Configuration section below)
 [size=3]All cheat options work only as host![/size]
 
@@ -37,7 +37,7 @@ Steam example: [i]C:\Program Files (x86)\Steam\steamapps\common\AbioticFactor\Bi
 [b]TakeHalfModifiers[/b] - [size=2]Modifier to the "PickUpKey", (PickUpKey + TakeHalfModifiers) [/size]
 [b]IncreaseStackModifiers[/b]- [size=2]Modifier to the "PickUpKey", (PickUpKey + IncreaseStackModifiers) [/size]
 [b]DecreaseStackModifiers[/b]- [size=2]Modifier to the "PickUpKey", (PickUpKey + DecreaseStackModifiers) [/size]
-[b]CheatMode[/b] - [size=2]Set to [b]false[/b] to disable the cheat feature while picking up single items from the stack[/size]
+[b]CheatMode[/b] - [size=2]If set to [b]true[/b], the stack will be increased each time there are not enough items left to pick up with the main key[/size]
 The [i]main.lua[/i] contains links to UE4SS documentation with possible key and modifier values.
 4. Don't forget to save your changes.
 
@@ -59,7 +59,7 @@ The mod is NOT compatible with the [url=https://www.nexusmods.com/abioticfactor/
 [font=Verdana][size=4][b]Feedback[/b][/size][/font]
 I've released the mod as soon I was done testing all the features.
 Please report any issues and ideas.
-Also If you really need each feature of the mod as a different key or you don't like to have the cheat mode per default, please let me know.
+Also If you really need each feature of the mod as a different key, please let me know.
 
 [font=Verdana][size=4][b]Known Issues[/b][/size][/font]
 Current UE4SS version works with the game, but it has of a problem that causes the game to crash when you exit it.
