@@ -9,9 +9,9 @@
 -- See ModifierKey: https://github.com/UE4SS-RE/RE-UE4SS/blob/main/docs/lua-api/table-definitions/modifierkey.md
 -- ModifierKeys can be combined. e.g.: {ModifierKey.CONTROL, ModifierKey.ALT} = CTRL + ALT + L
 local PickUpKey = Key.Q
-local IncreaseStackModifiers = { ModifierKey.SHIFT }
-local DecreaseStackModifiers = { ModifierKey.CONTROL }
-local TakeHalfModifiers = { ModifierKey.ALT }
+local TakeHalfModifiers = { ModifierKey.SHIFT }
+local IncreaseStackModifiers = { ModifierKey.CONTROL }
+local DecreaseStackModifiers = { ModifierKey.ALT }
 local CheatMode = true
 -------------------------------------
 
@@ -81,13 +81,25 @@ local function IncreaseStack()
         local lastEnteredItemSlot = DataHolder:GetLastEnteredItemSlot()
         if not lastEnteredItemSlot then return end
 
-
+        local inventory, slotIndex = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
+        if inventory then
+            AFUtils.AddToItemStack(inventory, slotIndex, 1)
+        end
     end)
 end
 
 local function DecreaseStack()
     ExecuteInGameThread(function()
-        
+        local lastEnteredItemSlot = DataHolder:GetLastEnteredItemSlot()
+        if not lastEnteredItemSlot then return end
+
+        local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
+        if currentStack > 1 then
+            local inventory, slotIndex = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
+            if inventory then
+                AFUtils.AddToItemStack(inventory, slotIndex, -1)
+            end
+        end
     end)
 end
 
