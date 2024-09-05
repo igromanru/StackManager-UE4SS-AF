@@ -191,10 +191,6 @@ ClientRestartPreId, ClientRestartPostId = RegisterHook(ClientRestart, function(C
     LogDebug("------------------------------")
 end)
 
-if DebugMode then
-    HookOnce()
-end
-
 -- Key Binds --
 if IsKeyBindRegistered(PickUpKey) then
     error("The PickUpKey key is already used for something else!")
@@ -204,5 +200,9 @@ RegisterKeyBind(PickUpKey, TakeOne)
 RegisterKeyBind(PickUpKey, TakeHalfModifiers, TakeHalf)
 RegisterKeyBind(PickUpKey, IncreaseStackModifiers, IncreaseStack)
 RegisterKeyBind(PickUpKey, DecreaseStackModifiers, DecreaseStack)
+
+if DebugMode then
+    HookOnce()
+end
 
 LogInfo("Mod loaded successfully")
