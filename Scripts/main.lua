@@ -22,14 +22,14 @@ local AFUtils = require("AFUtils.AFUtils")
 local Cache = require("Cache")
 
 ModName = "StackManager"
-ModVersion = "1.0.2"
+ModVersion = "1.0.3"
 DebugMode = true
 IsModEnabled = true
 
 LogInfo("Starting mod initialization")
 
 local function TakeOne()
-    ExecuteInGameThread(function()
+    -- ExecuteInGameThread(function()
         local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
         if not lastEnteredItemSlot then return end
 
@@ -60,11 +60,11 @@ local function TakeOne()
             end
         end
         lastEnteredItemSlot:PickUpThisItemToCursor(true, Cache.StackToTake)
-    end)
+    -- end)
 end
 
 local function TakeHalf()
-    ExecuteInGameThread(function()
+    -- ExecuteInGameThread(function()
         local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
         if not lastEnteredItemSlot then return end
 
@@ -89,13 +89,16 @@ local function TakeHalf()
             end
             lastEnteredItemSlot:PickUpThisItemToCursor(true, Cache.StackToTake)
         end
-    end)
+    -- end)
 end
 
 local function IncreaseStack()
-    ExecuteInGameThread(function()
+    -- ExecuteInGameThread(function()
         local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
-        if not lastEnteredItemSlot then return end
+        if not lastEnteredItemSlot then
+            LogDebug("IncreaseStack: lastEnteredItemSlot is Invalid")
+            return
+        end
 
         LogDebug("IncreaseStack: triggered")
         local inventory, slotIndex = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
@@ -103,11 +106,11 @@ local function IncreaseStack()
             LogDebug("IncreaseStack: Call AddToItemStack")
             AFUtils.AddToItemStack(inventory, slotIndex, 1)
         end
-    end)
+    -- end)
 end
 
 local function DecreaseStack()
-    ExecuteInGameThread(function()
+    -- ExecuteInGameThread(function()
         local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
         if not lastEnteredItemSlot then return end
 
@@ -120,7 +123,7 @@ local function DecreaseStack()
                 AFUtils.AddToItemStack(inventory, slotIndex, -1)
             end
         end
-    end)
+    -- end)
 end
 
 local function OnMouseEnter(Context)

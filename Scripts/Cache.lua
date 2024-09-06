@@ -9,7 +9,7 @@ local LastPickUpItemSlot = nil ---@type UW_InventoryItemSlot_C?
 
 ---@return UW_InventoryItemSlot_C?
 function Cache:GetLastEnteredItemSlot()
-    if LastEnteredItemSlot and LastEnteredItemSlot:IsValid() then
+    if LastEnteredItemSlot and LastEnteredItemSlot:IsValid() and not LastEnteredItemSlot.Empty then
         return LastEnteredItemSlot
     end
     LastEnteredItemSlot = nil
@@ -18,7 +18,7 @@ end
 
 ---@param ItemSlot UW_InventoryItemSlot_C|nil
 function Cache:SetLastEnteredItemSlot(ItemSlot)
-    if ItemSlot and ItemSlot:IsValid() and not ItemSlot.Empty then
+    if ItemSlot and ItemSlot:IsValid() then
         LastEnteredItemSlot = ItemSlot
     else
         LastEnteredItemSlot = nil
@@ -27,7 +27,7 @@ end
 
 ---@param ItemSlot UW_InventoryItemSlot_C|nil
 function Cache:SetLastPickUpItemSlot(ItemSlot)
-    if ItemSlot and ItemSlot:IsValid() and not ItemSlot.Empty then
+    if ItemSlot and ItemSlot:IsValid() then
         LastPickUpItemSlot = ItemSlot
     else
         LastPickUpItemSlot = nil
@@ -36,7 +36,7 @@ end
 
 ---@return UW_InventoryItemSlot_C?
 function Cache:GetLastPickUpItemSlot()
-    if LastPickUpItemSlot and LastPickUpItemSlot:IsValid() then
+    if LastPickUpItemSlot and LastPickUpItemSlot:IsValid() and not LastPickUpItemSlot.Empty then
         return LastPickUpItemSlot
     end
     LastPickUpItemSlot = nil
@@ -51,7 +51,6 @@ function Cache:IsSameSlot()
 end
 
 function Cache:Reset()
-    LastEnteredItemSlot = nil
     LastPickUpItemSlot = nil
     self.StackToTake = 0
 end
