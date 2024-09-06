@@ -29,7 +29,7 @@ IsModEnabled = true
 LogInfo("Starting mod initialization")
 
 local function TakeOne()
-    -- ExecuteInGameThread(function()
+    ExecuteInGameThread(function()
         local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
         if not lastEnteredItemSlot then return end
 
@@ -60,11 +60,11 @@ local function TakeOne()
             end
         end
         lastEnteredItemSlot:PickUpThisItemToCursor(true, Cache.StackToTake)
-    -- end)
+    end)
 end
 
 local function TakeHalf()
-    -- ExecuteInGameThread(function()
+    ExecuteInGameThread(function()
         local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
         if not lastEnteredItemSlot then return end
 
@@ -89,11 +89,11 @@ local function TakeHalf()
             end
             lastEnteredItemSlot:PickUpThisItemToCursor(true, Cache.StackToTake)
         end
-    -- end)
+    end)
 end
 
 local function IncreaseStack()
-    -- ExecuteInGameThread(function()
+    ExecuteInGameThread(function()
         local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
         if not lastEnteredItemSlot then
             LogDebug("IncreaseStack: lastEnteredItemSlot is Invalid")
@@ -106,11 +106,11 @@ local function IncreaseStack()
             LogDebug("IncreaseStack: Call AddToItemStack")
             AFUtils.AddToItemStack(inventory, slotIndex, 1)
         end
-    -- end)
+    end)
 end
 
 local function DecreaseStack()
-    -- ExecuteInGameThread(function()
+    ExecuteInGameThread(function()
         local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
         if not lastEnteredItemSlot then return end
 
@@ -123,7 +123,7 @@ local function DecreaseStack()
                 AFUtils.AddToItemStack(inventory, slotIndex, -1)
             end
         end
-    -- end)
+    end)
 end
 
 local function OnMouseEnter(Context)
