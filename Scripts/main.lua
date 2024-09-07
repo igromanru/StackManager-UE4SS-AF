@@ -239,6 +239,25 @@ local function HookOnce()
     end
 end
 
+if IsKeyBindRegistered(PickUpKey, PickUpModifiers) then
+    error("The TakeOne key and modifirers is already used for something else!")
+end
+if IsKeyBindRegistered(TakeHalfKey, TakeHalfModifiers) then
+    error("The TakeHalf key and modifirers is already used for something else!")
+end
+if IsKeyBindRegistered(IncreaseStackKey, IncreaseStackModifiers) then
+    error("The IncreaseStack key and modifirers is already used for something else!")
+end
+if IsKeyBindRegistered(DecreaseStackKey, DecreaseStackModifiers) then
+    error("The DecreaseStack key and modifirers is already used for something else!")
+end
+if IsKeyBindRegistered(DoubleStackKey, DoubleStackModifiers) then
+    error("The DoubleStack key and modifirers is already used for something else!")
+end
+if IsKeyBindRegistered(HalveStackKey, HalveStackModifiers) then
+    error("The HalveStack key and modifirers is already used for something else!")
+end
+
 -- Hooks --
 ClientRestartPreId, ClientRestartPostId = RegisterHook(ClientRestart, function(Context, NewPawn)
     LogDebug("[ClientRestart] called:")
@@ -247,10 +266,6 @@ ClientRestartPreId, ClientRestartPostId = RegisterHook(ClientRestart, function(C
 end)
 
 -- Key Binds --
-if IsKeyBindRegistered(PickUpKey) then
-    error("The PickUpKey key is already used for something else!")
-end
-
 RegisterKeyBind(PickUpKey, PickUpModifiers, TakeOne)
 RegisterKeyBind(TakeHalfKey, TakeHalfModifiers, TakeHalf)
 RegisterKeyBind(IncreaseStackKey, IncreaseStackModifiers, IncreaseStack)
