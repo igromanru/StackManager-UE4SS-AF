@@ -4,15 +4,29 @@
     Mod Name: Stack Manager
 ]]
 
--------------------------------------
+---------- Configurations ----------
 -- Possible keys: https://github.com/UE4SS-RE/RE-UE4SS/blob/main/docs/lua-api/table-definitions/key.md
 -- See ModifierKey: https://github.com/UE4SS-RE/RE-UE4SS/blob/main/docs/lua-api/table-definitions/modifierkey.md
--- ModifierKeys can be combined. e.g.: {ModifierKey.CONTROL, ModifierKey.ALT} = CTRL + ALT + L
+-- ModifierKeys can be combined. e.g.: {ModifierKey.CONTROL, ModifierKey.ALT} = CTRL + ALT + Q
+-- Take One
 local PickUpKey = Key.Q
-local TakeHalfModifiers = { ModifierKey.SHIFT }
-local IncreaseStackModifiers = { ModifierKey.CONTROL }
-local DecreaseStackModifiers = { ModifierKey.ALT }
+local PickUpModifiers = {}
 local CheatMode = false
+-- Take Half
+local TakeHalfKey = PickUpKey
+local TakeHalfModifiers = { ModifierKey.SHIFT }
+-- Increase Stack
+local IncreaseStackKey = PickUpKey
+local IncreaseStackModifiers = { ModifierKey.CONTROL }
+-- Decrease Stack
+local DecreaseStackKey = PickUpKey
+local DecreaseStackModifiers = { ModifierKey.ALT }
+-- Double Stack
+local DoubleStackKey = PickUpKey
+local DoubleStackModifiers = { ModifierKey.CONTROL, ModifierKey.SHIFT }
+-- Halve Stack
+local HalveStackKey = PickUpKey
+local HalveStackModifiers = { ModifierKey.ALT, ModifierKey.SHIFT }
 -------------------------------------
 
 ------------------------------
@@ -22,9 +36,14 @@ local AFUtils = require("AFUtils.AFUtils")
 local Cache = require("Cache")
 
 ModName = "StackManager"
-ModVersion = "1.0.3"
+ModVersion = "1.1.0"
 DebugMode = true
 IsModEnabled = true
+
+if not IsModEnabled then
+    LogInfo("The mod is disabled through IsModEnabled")
+    return
+end
 
 LogInfo("Starting mod initialization")
 
@@ -95,10 +114,7 @@ end
 local function IncreaseStack()
     ExecuteInGameThread(function()
         local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
-        if not lastEnteredItemSlot then
-            LogDebug("IncreaseStack: lastEnteredItemSlot is Invalid")
-            return
-        end
+        if not lastEnteredItemSlot then return end
 
         LogDebug("IncreaseStack: triggered")
         local inventory, slotIndex = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
@@ -121,6 +137,42 @@ local function DecreaseStack()
             if inventory then
                 LogDebug("DecreaseStack: Call AddToItemStack")
                 AFUtils.AddToItemStack(inventory, slotIndex, -1)
+            end
+        end
+    end)
+end
+
+local function DoubleStack()
+    ExecuteInGameThread(function()
+        local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
+        if not lastEnteredItemSlot then return end
+
+        LogDebug("DoubleStack: triggered")
+        local inventory, slotIndex = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
+        if inventory then
+            local stackToAdd = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
+            if stackToAdd < 1 then
+                stackToAdd = 1
+            end
+            LogDebug("DoubleStack: Call AddToItemStack: " .. stackToAdd)
+            AFUtils.AddToItemStack(inventory, slotIndex, stackToAdd)
+        end
+    end)
+end
+
+local function HalveStack()
+    ExecuteInGameThread(function()
+        local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
+        if not lastEnteredItemSlot then return end
+
+        local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
+        LogDebug("HalveStack: currentStack: ", currentStack)
+        if currentStack > 2 then
+            local inventory, slotIndex = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
+            if inventory then
+                local stackToSub = math.floor(currentStack / 2) * -1
+                LogDebug("HalveStack: Call AddToItemStack: " .. stackToSub)
+                AFUtils.AddToItemStack(inventory, slotIndex, stackToSub)
             end
         end
     end)
@@ -199,10 +251,12 @@ if IsKeyBindRegistered(PickUpKey) then
     error("The PickUpKey key is already used for something else!")
 end
 
-RegisterKeyBind(PickUpKey, TakeOne)
-RegisterKeyBind(PickUpKey, TakeHalfModifiers, TakeHalf)
-RegisterKeyBind(PickUpKey, IncreaseStackModifiers, IncreaseStack)
-RegisterKeyBind(PickUpKey, DecreaseStackModifiers, DecreaseStack)
+RegisterKeyBind(PickUpKey, PickUpModifiers, TakeOne)
+RegisterKeyBind(TakeHalfKey, TakeHalfModifiers, TakeHalf)
+RegisterKeyBind(IncreaseStackKey, IncreaseStackModifiers, IncreaseStack)
+RegisterKeyBind(DecreaseStackKey, DecreaseStackModifiers, DecreaseStack)
+RegisterKeyBind(DoubleStackKey, DoubleStackModifiers, DoubleStack)
+RegisterKeyBind(HalveStackKey, HalveStackModifiers, HalveStack)
 
 if DebugMode then
     HookOnce()
