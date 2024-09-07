@@ -6,7 +6,10 @@ Both keys can be used multiple times to increase the amount of items you're abou
 Additionally there are two modifiers to increase or decrease the stack:
 [b]Ctrl + Q[/b] will increase the stack of highlighted item, [b]Alt + Q[/b] will decrease it. (cheat option)
 [b]Cheat Mode:[/b] Setting that is default disabled. It causes Q (take 1 item) to increase the stack of the highlighted item if there are not enough items in the stack to be taken.
-The main key, modifiers and the cheat mode can be changed in the file [i]main.lua[/i] . (see Configuration section below)
+With v1.1.0 new cheat functions were added:
+Double Stack [b]Ctrl + Shift + Q[/b], will double item's current stack.
+Halve Stack [b]Ctrl + Shift + Q[/b], will halve item's current stack.
+All keys, modifiers and the cheat mode can be changed in the file [i]main.lua[/i] . (see Configuration section below)
 [size=3]All cheat options work only as host![/size]
 
 [color=#f1c232][font=Verdana][size=4][b]Attention[/b][/size][/font][/color]
@@ -20,26 +23,39 @@ I recommend to change it in game Settings->Controls to something else, [b]R[/b] 
 [size=2]As for now Vortex doesn't support the game, so you have to install the mod manually.[/size]
 1. Download the latest version of RE-UE4SS from it's [url=https://github.com/UE4SS-RE/RE-UE4SS/releases]Release[/url] section. You need the [b]UE4SS_v{version number}.zip [/b] (e.g.  UE4SS_v3.0.1.zip)
 2. Unzip the content of the zip archive into the following location: [i](game root directory)\AbioticFactor\Binaries\Win64\[/i]
-[size=2]It should be at the location of the [b]AbioticFactor-Win64-Shipping.exe[/b] !
-For Steam users it might be something like this: [i]C:\Program Files (x86)\Steam\steamapps\common\AbioticFactor\Binaries\Win64\[/i][/size]
+[size=2]It should be at the location of the [b]AbioticFactor-Win64-Shipping.exe[/b] ![/size]
+[size=2]For Steam users it might be something like this: [i]C:\Program Files (x86)\Steam\steamapps\common\AbioticFactor\Binaries\Win64\[/i][/size]
+[size=2]Make sure you don't create a new folder while extracting! If you do just move the content to the destination after.[/size]
 3. Now use the [b]Manual Download[/b] button in [i]Files[/i] tab to download the mod as a zip file as well.
 4. Unzip/extract the content of mod's zip ([b]StackManager[/b] folder) into the directory: [i](game root directory)\AbioticFactor\Binaries\Win64\Mods\[/i]
-[size=2]Whole mod path should be like this: [i](game root directory)\AbioticFactor\Binaries\Win64\Mods\StackManager\[/i]
-Steam example: [i]C:\Program Files (x86)\Steam\steamapps\common\AbioticFactor\Binaries\Win64\Mods\StackManager\
-[/i][/size]5. Done
+[size=2]Make sure you don't create a new folder while extracting! If you do just move the content to the destination after.[/size]
+[size=2]Whole mod path should be like this: [i](game root directory)\AbioticFactor\Binaries\Win64\Mods\StackManager\[/i][/size]
+[size=2]Steam example: [i]C:\Program Files (x86)\Steam\steamapps\common\AbioticFactor\Binaries\Win64\Mods\StackManager\[/i][/size]
+5. Verify that you have installed the mod correctly.
+The mod directory should contain a [b]Scripts[/b] folder an an [b]enabled.txt[/b] file.
+[size=2][i](game root directory)\AbioticFactor\Binaries\Win64\Mods\StackManager\Scripts\[/i]
+[i](game root directory)\AbioticFactor\Binaries\Win64\Mods\StackManager\enabled.txt[/i][/size]
 
 [font=Verdana][size=4][b]Mod Configuration[/b][/size][/font]
 1. Navigate into mod's directory to find the [b]main.lua[/b] file.
 [size=2]It should be in: (game root directory)\AbioticFactor\Binaries\Win64\Mods\StackManager\Scripts\[/size]
 2. Open the [b]main.lua[/b] with Notepad or any other text editor.
 3. Here you can change following variables:
-[b]PickUpKey[/b] - [size=2]Main key (see Description above)[/size]
-[b]TakeHalfModifiers[/b] - [size=2]Modifier to the "PickUpKey", (PickUpKey + TakeHalfModifiers) [/size]
-[b]IncreaseStackModifiers[/b]- [size=2]Modifier to the "PickUpKey", (PickUpKey + IncreaseStackModifiers) [/size]
-[b]DecreaseStackModifiers[/b]- [size=2]Modifier to the "PickUpKey", (PickUpKey + DecreaseStackModifiers) [/size]
-[b]CheatMode[/b] - [size=2]If set to [b]true[/b], the stack will be increased each time there are not enough items left to pick up with the main key[/size]
+[b]PickUpKey[/b] - [size=2]Key to pick up one item from stack[/size]
+[b]PickUpModifiers[/b] - [size=2]Modifiers for the PickUpKey, empty per default.[/size]
+[b]CheatMode[/b] - [size=2]If set to [b]true[/b], the stack will be increased each time there are not enough items left to pick up with the main key.[/size]
+[b]TakeHalfKey[/b] - [size=2]Key to pick up half of the stack. (Default value is "PickUpKey", it means no matter to what you change the [size=2]"PickUpKey"[/size], it will use the same key)[/size]
+[b]TakeHalfModifiers[/b] - [size=2]Modifier to the "TakeHalfKey". (Default value "{ ModifierKey.SHIFT }")[/size]
+[b]IncreaseStackKey[/b] - [size=2]Key to increase stack by 1. (Default value is "PickUpKey")[/size]
+[b]IncreaseStackModifiers[/b]- [size=2]Modifier to the "IncreaseStackKey".(Default value "{ ModifierKey.CONTROL }")[/size]
+[b]DecreaseStackKey[/b] - [size=2]Key to decrease stack by 1. (Default value is "PickUpKey")[/size]
+[b]DecreaseStackModifiers[/b]- [size=2]Modifier to the "DecreaseStackKey".(Default value "{ ModifierKey.ALT }")[/size]
+[b]DoubleStackKey[/b] - [size=2]Key to increase stack by it's current value (double it). (Default value is "PickUpKey")[/size]
+[b]DoubleStackModifiers[/b]- [size=2]Modifier to the "DoubleStackKey".(Default value "{ ModifierKey.CONTROL, ModifierKey.SHIFT }")[/size]
+[b]HalveStackKey[/b] - [size=2]Key to decrease stack by half. (Default value is "PickUpKey")[/size]
+[b]HalveStackModifiers[/b]- [size=2]Modifier to the "HalveStackKey".(Default value "{ ModifierKey.ALT, ModifierKey.SHIFT }")[/size]
 The [i]main.lua[/i] contains links to UE4SS documentation with possible key and modifier values.
-4. Don't forget to save your changes.
+4. Don't forget to save the file. You will also have to reapply changes after each mod update.
 
 [font=Verdana][size=4][b]Recommended UE4SS settings for better performance[/b][/size][/font]
 [size=2]If you experience lag spikes, I highly recommend to change this settings.[/size]
@@ -56,15 +72,11 @@ EnableDumping = 0[/code]
 [font=Verdana][size=4][b]Compatibility[/b][/size][/font]
 The mod is NOT compatible with the [url=https://www.nexusmods.com/abioticfactor/mods/6]Just Press Q[/url] mod!
 
-[font=Verdana][size=4][b]Feedback[/b][/size][/font]
-I've released the mod as soon I was done testing all the features.
-Please report any issues and ideas.
-Also If you really need each feature of the mod as a different key, please let me know.
-
 [font=Verdana][size=4][b]Known Issues[/b][/size][/font]
-Current UE4SS version works with the game, but it has of a problem that causes the game to crash when you exit it.
-It has nothing to do with the mod and it has no negative impact on the game or your save file, it's just a bit annoying.
-
+[list]
+[*]Random crashes when pressing the hotkey. (Sadly I think it's a problem with UE4SS, it happens quite rarely but still can happen)
+[*]Current UE4SS version works with the game, but it has of a problem that causes the game to crash when you exit it.It has nothing to do with the mod and it has no negative impact on the game or your save file, it's just a bit annoying.
+[/list]
 [font=Verdana][size=4][b]My AF Mods[/b][/size][/font]
 Check out my other Abiotic Factor mods.
 [list][*][url=https://www.nexusmods.com/abioticfactor/mods/28]Cheat Console Commands[/url]
