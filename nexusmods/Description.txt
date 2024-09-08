@@ -8,7 +8,7 @@ Additionally there are two modifiers to increase or decrease the stack:
 [b]Cheat Mode:[/b] Setting that is default disabled. It causes Q (take 1 item) to increase the stack of the highlighted item if there are not enough items in the stack to be taken.
 With v1.1.0 new cheat functions were added:
 Double Stack [b]Ctrl + Shift + Q[/b], will double item's current stack.
-Halve Stack [b]Ctrl + Shift + Q[/b], will halve item's current stack.
+Halve Stack [b]Alt + Shift + Q[/b], will halve item's current stack.
 All keys, modifiers and the cheat mode can be changed in the file [i]main.lua[/i] . (see Configuration section below)
 [size=3]All cheat options work only as host![/size]
 
