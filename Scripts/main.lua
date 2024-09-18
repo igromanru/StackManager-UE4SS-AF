@@ -11,7 +11,6 @@
 -- Take One
 local PickUpKey = Key.Q
 local PickUpModifiers = {}
-local CheatMode = false
 -- Take Half
 local TakeHalfKey = PickUpKey
 local TakeHalfModifiers = { ModifierKey.SHIFT }
@@ -36,7 +35,7 @@ local AFUtils = require("AFUtils.AFUtils")
 local Cache = require("Cache")
 
 ModName = "StackManager"
-ModVersion = "1.1.0"
+ModVersion = "1.1.1"
 DebugMode = true
 IsModEnabled = true
 
@@ -59,26 +58,16 @@ local function TakeOne()
         end
         LogDebug("TakeOne: StackToTake: ",  Cache.StackToTake)
         local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
-        if currentStack <= Cache.StackToTake then
-            LogDebug("TakeOne: CurrentStack: ",  currentStack)
-            if CheatMode then
-                local stackToAdd = (Cache.StackToTake + 1) - currentStack
-                LogDebug("TakeOne: CheatMode->StackToAdd: ",  stackToAdd)
-                if stackToAdd > 0 then
-                    local inventory, slotIndex = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
-                    if inventory then
-                        LogDebug("TakeOne: AddToItemStack: slotIndex: " .. slotIndex .. " stackToAdd: " .. stackToAdd)
-                        if AFUtils.AddToItemStack(inventory, slotIndex, stackToAdd) then
-                            LogDebug("TakeOne: AddToItemStack: Success")
-                        end
-                    end
-                end
-            else
-                LogDebug("TakeOne: Not enough items in stack, skip")
-                return
-            end
+        LogDebug("TakeOne: CurrentStack: ",  currentStack)
+        if currentStack < Cache.StackToTake then
+            LogDebug("TakeOne: Not enough items in stack, skip")
+            return
         end
-        lastEnteredItemSlot:PickUpThisItemToCursor(true, Cache.StackToTake)
+        if currentStack > 1 then
+            lastEnteredItemSlot:PickUpThisItemToCursor(true, Cache.StackToTake)
+        else
+            lastEnteredItemSlot:PickUpThisItemToCursor(false, 1)
+        end
     end)
 end
 
