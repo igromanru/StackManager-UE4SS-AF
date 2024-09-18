@@ -5,7 +5,6 @@ Modifier key to pick up half of the stack is [b]Shift[/b]. Press [b]Shift + Q[/b
 Both keys can be used multiple times to increase the amount of items you're about to take from the stack.
 Additionally there are two modifiers to increase or decrease the stack:
 [b]Ctrl + Q[/b] will increase the stack of highlighted item, [b]Alt + Q[/b] will decrease it. (cheat option)
-[b]Cheat Mode:[/b] Setting that is default disabled. It causes Q (take 1 item) to increase the stack of the highlighted item if there are not enough items in the stack to be taken.
 With v1.1.0 new cheat functions were added:
 Double Stack [b]Ctrl + Shift + Q[/b], will double item's current stack.
 Halve Stack [b]Alt + Shift + Q[/b], will halve item's current stack.
@@ -32,7 +31,7 @@ I recommend to change it in game Settings->Controls to something else, [b]R[/b] 
 [size=2]Whole mod path should be like this: [i](game root directory)\AbioticFactor\Binaries\Win64\Mods\StackManager\[/i][/size]
 [size=2]Steam example: [i]C:\Program Files (x86)\Steam\steamapps\common\AbioticFactor\Binaries\Win64\Mods\StackManager\[/i][/size]
 5. Verify that you have installed the mod correctly.
-The mod directory should contain a [b]Scripts[/b] folder an an [b]enabled.txt[/b] file.
+The mod directory should contain a [b]Scripts[/b] folder and an [b]enabled.txt[/b] file.
 [size=2][i](game root directory)\AbioticFactor\Binaries\Win64\Mods\StackManager\Scripts\[/i]
 [i](game root directory)\AbioticFactor\Binaries\Win64\Mods\StackManager\enabled.txt[/i][/size]
 
@@ -43,7 +42,6 @@ The mod directory should contain a [b]Scripts[/b] folder an an [b]enabled.txt[/b
 3. Here you can change following variables:
 [b]PickUpKey[/b] - [size=2]Key to pick up one item from stack[/size]
 [b]PickUpModifiers[/b] - [size=2]Modifiers for the PickUpKey, empty per default.[/size]
-[b]CheatMode[/b] - [size=2]If set to [b]true[/b], the stack will be increased each time there are not enough items left to pick up with the main key.[/size]
 [b]TakeHalfKey[/b] - [size=2]Key to pick up half of the stack. (Default value is "PickUpKey", it means no matter to what you change the [size=2]"PickUpKey"[/size], it will use the same key)[/size]
 [b]TakeHalfModifiers[/b] - [size=2]Modifier to the "TakeHalfKey". (Default value "{ ModifierKey.SHIFT }")[/size]
 [b]IncreaseStackKey[/b] - [size=2]Key to increase stack by 1. (Default value is "PickUpKey")[/size]
@@ -57,16 +55,21 @@ The mod directory should contain a [b]Scripts[/b] folder an an [b]enabled.txt[/b
 The [i]main.lua[/i] contains links to UE4SS documentation with possible key and modifier values.
 4. Don't forget to save the file. You will also have to reapply changes after each mod update.
 
-[font=Verdana][size=4][b]Recommended UE4SS settings for better performance[/b][/size][/font]
-[size=2]If you experience lag spikes, I highly recommend to change this settings.[/size]
+[font=Verdana][size=4][b]Recommended UE4SS settings[/b][/size][/font]
+[size=2]I highly recommend to change these settings to improve performance and reduce crashes.[/size]
 1. Navigate to the game directory where you've installed the UE4SS: [i](game root directory)\AbioticFactor\Binaries\Win64\[/i]
 [size=2]e.g. [i]C:\Program Files (x86)\Steam\steamapps\common\AbioticFactor\Binaries\Win64\[/i][/size]
 2. Open [b]UE4SS-settings.ini[/b] with any text editor.
 3. Find following entries and change them as following:
 [code]bUseUObjectArrayCache = false
 GuiConsoleEnabled = 0
-EnableDumping = 0[/code]
-4. Save the file.
+EnableDumping = 0
+[/code]4. Save the UE4SS-settings.ini.
+5. Navigate into the [b]Mods[/b] directory and open [b]mods.txt[/b] with a text editor
+6. Disable following mods by setting the value behind ":" to 0:
+[code]BPModLoaderMod : 0
+BPML_GenericFunctions : 0[/code]
+7. Save the file
 [size=2]If you still experience performance issues, write a detailed comment what happens, your PC specs and which mods you use.[/size]
 
 [font=Verdana][size=4][b]Compatibility[/b][/size][/font]
