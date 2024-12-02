@@ -16,24 +16,20 @@ All keys, modifiers and the cheat mode can be changed in the file [i]main.lua[/i
 I recommend to change it in game Settings->Controls to something else, [b]R[/b] might be a good option, since you don't reload while in inventory anyway.
 
 [font=Verdana][size=4][b]Requirements[/b][/size][/font]
-[size=3]Unreal Engine Scripting System aka. [url=https://github.com/UE4SS-RE/RE-UE4SS]RE-UE4SS[/url][/size]
+[size=3][url=https://www.nexusmods.com/abioticfactor/mods/35]UE4SS for Abiotic Factor[/url][/size]
 
 [font=Verdana][size=4][b]Manual Installation[/b][/size][/font]
-[size=2]As for now Vortex doesn't support the game, so you have to install the mod manually.[/size]
-1. Download the latest version of RE-UE4SS from it's [url=https://github.com/UE4SS-RE/RE-UE4SS/releases]Release[/url] section. You need the [b]UE4SS_v{version number}.zip [/b] (e.g.  UE4SS_v3.0.1.zip)
-2. Unzip the content of the zip archive into the following location: [i](game root directory)\AbioticFactor\Binaries\Win64\[/i]
-[size=2]It should be at the location of the [b]AbioticFactor-Win64-Shipping.exe[/b] ![/size]
-[size=2]For Steam users it might be something like this: [i]C:\Program Files (x86)\Steam\steamapps\common\AbioticFactor\Binaries\Win64\[/i][/size]
+[size=1]As for now Vortex doesn't support the game, so you have to install the mod manually.[/size]
+1. Follow the instruction on the [url=https://www.nexusmods.com/abioticfactor/mods/35]UE4SS for Abiotic Factor[/url] page to download and install latest UE4SS from there.
+2. After use the [b]Manual Download[/b] button in [i]Files[/i] tab of this mod to download the mod as a zip file.
+4. Unzip/extract the content of mod's zip ([b]StackManager[/b] folder) into the directory: [i](game root directory)\AbioticFactor\Binaries\Win64\ue4ss\Mods\[/i]
 [size=2]Make sure you don't create a new folder while extracting! If you do just move the content to the destination after.[/size]
-3. Now use the [b]Manual Download[/b] button in [i]Files[/i] tab to download the mod as a zip file as well.
-4. Unzip/extract the content of mod's zip ([b]StackManager[/b] folder) into the directory: [i](game root directory)\AbioticFactor\Binaries\Win64\Mods\[/i]
-[size=2]Make sure you don't create a new folder while extracting! If you do just move the content to the destination after.[/size]
-[size=2]Whole mod path should be like this: [i](game root directory)\AbioticFactor\Binaries\Win64\Mods\StackManager\[/i][/size]
-[size=2]Steam example: [i]C:\Program Files (x86)\Steam\steamapps\common\AbioticFactor\Binaries\Win64\Mods\StackManager\[/i][/size]
+[size=2]Whole mod path should be like this: [i](game root directory)\AbioticFactor\Binaries\Win64\ue4ss\Mods\StackManager\[/i][/size]
+[size=2]Steam example: [i]C:\Program Files (x86)\Steam\steamapps\common\AbioticFactor\Binaries\Win64\ue4ss\Mods\StackManager\[/i][/size]
 5. Verify that you have installed the mod correctly.
 The mod directory should contain a [b]Scripts[/b] folder and an [b]enabled.txt[/b] file.
-[size=2][i](game root directory)\AbioticFactor\Binaries\Win64\Mods\StackManager\Scripts\[/i]
-[i](game root directory)\AbioticFactor\Binaries\Win64\Mods\StackManager\enabled.txt[/i][/size]
+[size=2][i](game root directory)\AbioticFactor\Binaries\Win64\ue4ss\Mods\StackManager\Scripts\[/i]
+[i](game root directory)\AbioticFactor\Binaries\Win64\ue4ss\Mods\StackManager\enabled.txt[/i][/size]
 
 [font=Verdana][size=4][b]Mod Configuration[/b][/size][/font]
 1. Navigate into mod's directory to find the [b]main.lua[/b] file.
@@ -55,30 +51,13 @@ The mod directory should contain a [b]Scripts[/b] folder and an [b]enabled.txt[/
 The [i]main.lua[/i] contains links to UE4SS documentation with possible key and modifier values.
 4. Don't forget to save the file. You will also have to reapply changes after each mod update.
 
-[font=Verdana][size=4][b]Recommended UE4SS settings[/b][/size][/font]
-[size=2]I highly recommend to change these settings to improve performance and reduce crashes.[/size]
-1. Navigate to the game directory where you've installed the UE4SS: [i](game root directory)\AbioticFactor\Binaries\Win64\[/i]
-[size=2]e.g. [i]C:\Program Files (x86)\Steam\steamapps\common\AbioticFactor\Binaries\Win64\[/i][/size]
-2. Open [b]UE4SS-settings.ini[/b] with any text editor.
-3. Find following entries and change them as following:
-[code]bUseUObjectArrayCache = false
-GuiConsoleEnabled = 0
-EnableDumping = 0
-[/code]4. Save the UE4SS-settings.ini.
-5. Navigate into the [b]Mods[/b] directory and open [b]mods.txt[/b] with a text editor
-6. Disable following mods by setting the value behind ":" to 0:
-[code]BPModLoaderMod : 0
-BPML_GenericFunctions : 0[/code]
-7. Save the file
-[size=2]If you still experience performance issues, write a detailed comment what happens, your PC specs and which mods you use.[/size]
-
 [font=Verdana][size=4][b]Compatibility[/b][/size][/font]
 The mod is NOT compatible with the [url=https://www.nexusmods.com/abioticfactor/mods/6]Just Press Q[/url] mod!
 
 [font=Verdana][size=4][b]Known Issues[/b][/size][/font]
 [list]
-[*]Random crashes when pressing the hotkey. (Sadly I think it's a problem with UE4SS, it happens quite rarely but still can happen)
-[*]Current UE4SS version works with the game, but it has of a problem that causes the game to crash when you exit it.It has nothing to do with the mod and it has no negative impact on the game or your save file, it's just a bit annoying.
+[*]Crashes when pressing the hotkey. It's an UE4SS issue, you can test if the game will crash by pressing the hotkey (default Q) as soon the game is loaded.
+[*]See UE4SS mod page for UE4SS native issues
 [/list]
 [font=Verdana][size=4][b]My AF Mods[/b][/size][/font]
 Check out my other Abiotic Factor mods.
@@ -87,5 +66,14 @@ Check out my other Abiotic Factor mods.
 [*][url=https://www.nexusmods.com/abioticfactor/mods/22]Unlimited Power (Gear - Held Item - Batteries)[/url]
 [*][url=https://www.nexusmods.com/abioticfactor/mods/31]Jager Corpse Remover[/url]
 [*][url=https://www.nexusmods.com/abioticfactor/mods/20]Duplicate Items[/url]
+[*][url=https://www.nexusmods.com/abioticfactor/mods/41]Infinite Leyak Containment[/url]
+[*][url=https://www.nexusmods.com/abioticfactor/mods/42]Customization Unlocker[/url]
 [/list]
 [b][url=https://github.com/igromanru/StackManager-UE4SS-AF]GitHub Page[/url][/b]
+
+[font=Arial][size=4]Highest form of appreciation[/size][/font]
+[size=2]If you like my work and feel generous, you can support me.[/size]
+[b]BTC:[/b] bc1q3frvfljn7ut09ggep2gxugv4ypqvyexz3ya7ja
+[b]ETH:[/b] 0xEedBbF6eFa84198cc94fE4Bf6FBB5dfa674AF86b
+[b]ADA:[/b] addr1qyx2sd2rgwdzvjhwnc35udx4k6w9lg524pwrf0llr7d2shzrewyq3nqyxfceuhgh5n5ucx3n8ws0n48krrlpw4khtedq4hzv93
+[url=https://ko-fi.com/igromanru][img]https://i.imgur.com/rGcPxK8.png[/img][/url]

@@ -35,7 +35,7 @@ local AFUtils = require("AFUtils.AFUtils")
 local Cache = require("Cache")
 
 ModName = "StackManager"
-ModVersion = "1.1.1"
+ModVersion = "1.1.2"
 DebugMode = true
 IsModEnabled = true
 
@@ -209,25 +209,6 @@ local function DropItemFromCursor(Context, DragDropOperation, Leftovers)
     -- LogDebug("------------------------------")
 end
 
-local ClientRestart = "/Script/Engine.PlayerController:ClientRestart"
-local ClientRestartPreId = nil
-local ClientRestartPostId = nil
-local WasHooked = false
-local function HookOnce()
-    if not WasHooked then
-        RegisterHook("/Game/Blueprints/Widgets/Inventory/W_InventoryItemSlot.W_InventoryItemSlot_C:OnMouseEnter", OnMouseEnter)
-        RegisterHook("/Game/Blueprints/Widgets/Inventory/W_InventoryItemSlot.W_InventoryItemSlot_C:OnMouseLeave", OnMouseLeave)
-        RegisterHook("/Game/Blueprints/Widgets/Inventory/W_InventoryItemSlot.W_InventoryItemSlot_C:PickUpThisItemToCursor", PickUpThisItemToCursor)
-        RegisterHook("/Game/Blueprints/Widgets/Inventory/W_InventoryItemSlot.W_InventoryItemSlot_C:DropItemFromCursor", DropItemFromCursor)
-        WasHooked = true
-    end
-    if ClientRestartPreId and ClientRestartPostId then
-        UnregisterHook(ClientRestart, ClientRestartPreId, ClientRestartPostId)
-        ClientRestartPreId = nil
-        ClientRestartPostId = nil
-    end
-end
-
 if IsKeyBindRegistered(PickUpKey, PickUpModifiers) then
     error("The TakeOne key and modifirers is already used for something else!")
 end
@@ -248,10 +229,14 @@ if IsKeyBindRegistered(HalveStackKey, HalveStackModifiers) then
 end
 
 -- Hooks --
-ClientRestartPreId, ClientRestartPostId = RegisterHook(ClientRestart, function(Context, NewPawn)
-    LogDebug("[ClientRestart] called:")
-    HookOnce()
-    LogDebug("------------------------------")
+ExecuteInGameThread(function()
+    LogInfo("Initializing hooks")
+    LoadAsset("/Game/Blueprints/Widgets/Inventory/W_InventoryItemSlot.W_InventoryItemSlot_C")
+    RegisterHook("/Game/Blueprints/Widgets/Inventory/W_InventoryItemSlot.W_InventoryItemSlot_C:OnMouseEnter", OnMouseEnter)
+    RegisterHook("/Game/Blueprints/Widgets/Inventory/W_InventoryItemSlot.W_InventoryItemSlot_C:OnMouseLeave", OnMouseLeave)
+    RegisterHook("/Game/Blueprints/Widgets/Inventory/W_InventoryItemSlot.W_InventoryItemSlot_C:PickUpThisItemToCursor", PickUpThisItemToCursor)
+    RegisterHook("/Game/Blueprints/Widgets/Inventory/W_InventoryItemSlot.W_InventoryItemSlot_C:DropItemFromCursor", DropItemFromCursor)
+    LogInfo("Hooks initialized")
 end)
 
 -- Key Binds --
@@ -261,9 +246,5 @@ RegisterKeyBind(IncreaseStackKey, IncreaseStackModifiers, IncreaseStack)
 RegisterKeyBind(DecreaseStackKey, DecreaseStackModifiers, DecreaseStack)
 RegisterKeyBind(DoubleStackKey, DoubleStackModifiers, DoubleStack)
 RegisterKeyBind(HalveStackKey, HalveStackModifiers, HalveStack)
-
-if DebugMode then
-    HookOnce()
-end
 
 LogInfo("Mod loaded successfully")
