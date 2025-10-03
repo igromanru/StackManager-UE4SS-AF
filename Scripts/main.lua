@@ -44,6 +44,10 @@ if not IsModEnabled then
     return
 end
 
+-- ToDos
+-- Add hotkey to pickup all items in stack except one
+-- Add hotkey or ability to transfer picked up items directly to the inventory
+
 LogInfo("Starting mod initialization")
 
 local function TakeOne()
