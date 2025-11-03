@@ -35,7 +35,7 @@ local AFUtils = require("AFUtils.AFUtils")
 local Cache = require("Cache")
 
 ModName = "StackManager"
-ModVersion = "1.1.3"
+ModVersion = "1.1.4"
 DebugMode = true
 IsModEnabled = true
 
