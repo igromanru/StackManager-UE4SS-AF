@@ -35,7 +35,7 @@ local AFUtils = require("AFUtils.AFUtils")
 local Cache = require("Cache")
 
 ModName = "StackManager"
-ModVersion = "1.1.4"
+ModVersion = "1.1.5"
 DebugMode = true
 IsModEnabled = true
 
@@ -49,6 +49,14 @@ end
 -- Add hotkey or ability to transfer picked up items directly to the inventory
 
 LogInfo("Starting mod initialization")
+
+--- Get Durability from ChangeableData
+---@param ChangeableData FAbiotic_InventoryChangeableDataStruct?
+---@return number durability 
+local function GetDurability(ChangeableData)
+    if not ChangeableData then return 100 end
+    return ChangeableData.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8
+end
 
 local function TakeOne()
     ExecuteInGameThread(function()
@@ -110,10 +118,10 @@ local function IncreaseStack()
         if not lastEnteredItemSlot then return end
 
         LogDebug("IncreaseStack: triggered")
-        local inventory, slotIndex = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
+        local inventory, slotIndex, changeableData = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
         if inventory then
             LogDebug("IncreaseStack: Call AddToItemStack")
-            AFUtils.AddToItemStack(inventory, slotIndex, 1)
+            AFUtils.AddToItemStack(inventory, slotIndex, 1, GetDurability(changeableData))
         end
     end)
 end
@@ -126,10 +134,10 @@ local function DecreaseStack()
         local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
         LogDebug("DecreaseStack: currentStack: ", currentStack)
         if currentStack > 1 then
-            local inventory, slotIndex = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
+            local inventory, slotIndex, changeableData = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
             if inventory then
                 LogDebug("DecreaseStack: Call AddToItemStack")
-                AFUtils.AddToItemStack(inventory, slotIndex, -1)
+                AFUtils.AddToItemStack(inventory, slotIndex, -1, GetDurability(changeableData))
             end
         end
     end)
@@ -141,14 +149,14 @@ local function DoubleStack()
         if not lastEnteredItemSlot then return end
 
         LogDebug("DoubleStack: triggered")
-        local inventory, slotIndex = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
+        local inventory, slotIndex, changeableData = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
         if inventory then
             local stackToAdd = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
             if stackToAdd < 1 then
                 stackToAdd = 1
             end
             LogDebug("DoubleStack: Call AddToItemStack: " .. stackToAdd)
-            AFUtils.AddToItemStack(inventory, slotIndex, stackToAdd)
+            AFUtils.AddToItemStack(inventory, slotIndex, stackToAdd, GetDurability(changeableData))
         end
     end)
 end
@@ -161,11 +169,11 @@ local function HalveStack()
         local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
         LogDebug("HalveStack: currentStack: ", currentStack)
         if currentStack > 2 then
-            local inventory, slotIndex = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
+            local inventory, slotIndex, changeableData = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
             if inventory then
                 local stackToSub = math.floor(currentStack / 2) * -1
                 LogDebug("HalveStack: Call AddToItemStack: " .. stackToSub)
-                AFUtils.AddToItemStack(inventory, slotIndex, stackToSub)
+                AFUtils.AddToItemStack(inventory, slotIndex, stackToSub, GetDurability(changeableData))
             end
         end
     end)
