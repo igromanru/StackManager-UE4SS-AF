@@ -92,22 +92,61 @@ local function TakeHalf()
         
         LogDebug("TakeHalf: CurrentStack: ", currentStack)
         if currentStack > 1 then
-            local half = math.floor(currentStack / 2)
-            LogDebug("TakeHalf: Value: ", half)
-            LogDebug("TakeHalf: StackToTake: ", Cache.StackToTake)
-            if Cache.StackToTake < half then
-                Cache.StackToTake = half
+            -- Calculate half of the remaining items after StackToTake is already taken
+            local remainingAfterFirstPick = currentStack - Cache.StackToTake
+            
+            if remainingAfterFirstPick <= 0 then
+                -- All items would be taken by first pick, take one less to leave at least 1
+                LogDebug("TakeHalf: Remaining after first pick is 0 or less, clamping")
+                Cache.StackToTake = math.max(1, currentStack - 1)
             else
-                local halfOfTheRest = (currentStack - Cache.StackToTake) / 2
-                LogDebug("TakeHalf: halfOfTheRest: ", halfOfTheRest)
-                Cache.StackToTake = math.floor(Cache.StackToTake + halfOfTheRest)
+                local halfOfRemaining = math.floor(remainingAfterFirstPick / 2)
+                
+                if Cache.StackToTake < halfOfRemaining then
+                    -- First pick would take less than half of remaining, so take exactly half
+                    LogDebug("TakeHalf: Taking half of remaining")
+                    Cache.StackToTake = halfOfRemaining
+                else
+                    -- First pick already takes at least half, so add half of what's left after first
+                    local additionalHalf = math.floor((remainingAfterFirstPick - Cache.StackToTake) / 2)
+                    LogDebug("TakeHalf: Additional half needed")
+                    Cache.StackToTake = Cache.StackToTake + additionalHalf
+                end
             end
-            LogDebug("TakeHalf: New StackToTake: ", Cache.StackToTake)
+            
+            -- Clamp to ensure we don't take more than available, leaving at least 1
             if Cache.StackToTake >= currentStack then
                 Cache.StackToTake = currentStack - 1
-                LogDebug("TakeHalf: Clamp StackToTake: ", Cache.StackToTake)
+                LogDebug("TakeHalf: Clamped StackToTake: ", Cache.StackToTake)
             end
+            
+            -- Ensure minimum of 1
+            Cache.StackToTake = math.max(1, Cache.StackToTake)
+            
+            LogDebug("TakeHalf: Final StackToTake: ", Cache.StackToTake)
             lastEnteredItemSlot:PickUpThisItemToCursor(true, Cache.StackToTake)
+        end
+    end)
+end
+
+local function HalveStack()
+    ExecuteInGameThread(function()
+        local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
+        if not lastEnteredItemSlot then return end
+
+        local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
+        LogDebug("HalveStack: currentStack: ", currentStack)
+        
+        -- Only halve if we have at least 2 items (halving 1 item leaves 0.5, which floors to 0)
+        if currentStack >= 2 then
+            local inventory, slotIndex, changeableData = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
+            if inventory then
+                -- Calculate how many to subtract (half of current stack)
+                local stackToSub = math.floor(currentStack / 2) * -1
+                
+                LogDebug("HalveStack: Call AddToItemStack: " .. stackToSub)
+                AFUtils.AddToItemStack(inventory, slotIndex, stackToSub, GetDurability(changeableData))
+            end
         end
     end)
 end
@@ -161,24 +200,6 @@ local function DoubleStack()
     end)
 end
 
-local function HalveStack()
-    ExecuteInGameThread(function()
-        local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
-        if not lastEnteredItemSlot then return end
-
-        local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
-        LogDebug("HalveStack: currentStack: ", currentStack)
-        if currentStack > 2 then
-            local inventory, slotIndex, changeableData = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
-            if inventory then
-                local stackToSub = math.floor(currentStack / 2) * -1
-                LogDebug("HalveStack: Call AddToItemStack: " .. stackToSub)
-                AFUtils.AddToItemStack(inventory, slotIndex, stackToSub, GetDurability(changeableData))
-            end
-        end
-    end)
-end
-
 local function OnMouseEnter(Context)
     local inventoryItemSlot = Context:get() ---@type UW_InventoryItemSlot_C
 
@@ -222,22 +243,22 @@ local function DropItemFromCursor(Context, DragDropOperation, Leftovers)
 end
 
 if IsKeyBindRegistered(PickUpKey, PickUpModifiers) then
-    error("The TakeOne key and modifirers is already used for something else!")
+    error("The TakeOne key and modifiers is already used for something else!")
 end
 if IsKeyBindRegistered(TakeHalfKey, TakeHalfModifiers) then
-    error("The TakeHalf key and modifirers is already used for something else!")
+    error("The TakeHalf key and modifiers is already used for something else!")
 end
 if IsKeyBindRegistered(IncreaseStackKey, IncreaseStackModifiers) then
-    error("The IncreaseStack key and modifirers is already used for something else!")
+    error("The IncreaseStack key and modifiers is already used for something else!")
 end
 if IsKeyBindRegistered(DecreaseStackKey, DecreaseStackModifiers) then
-    error("The DecreaseStack key and modifirers is already used for something else!")
+    error("The DecreaseStack key and modifiers is already used for something else!")
 end
 if IsKeyBindRegistered(DoubleStackKey, DoubleStackModifiers) then
-    error("The DoubleStack key and modifirers is already used for something else!")
+    error("The DoubleStack key and modifiers is already used for something else!")
 end
 if IsKeyBindRegistered(HalveStackKey, HalveStackModifiers) then
-    error("The HalveStack key and modifirers is already used for something else!")
+    error("The HalveStack key and modifiers is already used for something else!")
 end
 
 -- Hooks --
