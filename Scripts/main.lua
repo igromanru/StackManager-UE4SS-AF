@@ -51,11 +51,11 @@ end
 LogInfo("Starting mod initialization")
 
 --- Get Durability from ChangeableData
----@param ChangeableData FAbiotic_InventoryChangeableDataStruct?
+---@param ChangeableData FAbioticInventoryChangeableData?
 ---@return number durability 
 local function GetDurability(ChangeableData)
     if not ChangeableData then return 100 end
-    return ChangeableData.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8
+    return ChangeableData.CurrentItemDurability
 end
 
 local function TakeOne()
@@ -69,7 +69,7 @@ local function TakeOne()
             Cache.StackToTake = 1
         end
         LogDebug("TakeOne: StackToTake: ",  Cache.StackToTake)
-        local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
+        local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack
         LogDebug("TakeOne: CurrentStack: ",  currentStack)
         if currentStack < Cache.StackToTake then
             LogDebug("TakeOne: Not enough items in stack, skip")
@@ -88,7 +88,7 @@ local function TakeHalf()
         local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
         if not lastEnteredItemSlot then return end
 
-        local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
+        local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack
         
         LogDebug("TakeHalf: CurrentStack: ", currentStack)
         if currentStack > 1 then
@@ -134,7 +134,7 @@ local function HalveStack()
         local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
         if not lastEnteredItemSlot then return end
 
-        local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
+        local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack
         LogDebug("HalveStack: currentStack: ", currentStack)
         
         -- Only halve if we have at least 2 items (halving 1 item leaves 0.5, which floors to 0)
@@ -170,7 +170,7 @@ local function DecreaseStack()
         local lastEnteredItemSlot = Cache:GetLastEnteredItemSlot()
         if not lastEnteredItemSlot then return end
 
-        local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
+        local currentStack = lastEnteredItemSlot.ItemChangeableStats.CurrentStack
         LogDebug("DecreaseStack: currentStack: ", currentStack)
         if currentStack > 1 then
             local inventory, slotIndex, changeableData = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
@@ -190,7 +190,7 @@ local function DoubleStack()
         LogDebug("DoubleStack: triggered")
         local inventory, slotIndex, changeableData = AFUtils.GetInventoryAndSlotIndexFromItemSlot(lastEnteredItemSlot)
         if inventory then
-            local stackToAdd = lastEnteredItemSlot.ItemChangeableStats.CurrentStack_9_D443B69044D640B0989FD8A629801A49
+            local stackToAdd = lastEnteredItemSlot.ItemChangeableStats.CurrentStack
             if stackToAdd < 1 then
                 stackToAdd = 1
             end
@@ -242,6 +242,8 @@ local function DropItemFromCursor(Context, DragDropOperation, Leftovers)
     -- LogDebug("------------------------------")
 end
 
+WaitForTheGameToBeFullyLoaded()
+
 if IsKeyBindRegistered(PickUpKey, PickUpModifiers) then
     error("The TakeOne key and modifiers is already used for something else!")
 end
@@ -260,8 +262,6 @@ end
 if IsKeyBindRegistered(HalveStackKey, HalveStackModifiers) then
     error("The HalveStack key and modifiers is already used for something else!")
 end
-
-WaitForTheGameToBeFullyLoaded()
 
 -- Hooks --
 ExecuteInGameThread(function()
